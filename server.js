@@ -1,19 +1,25 @@
 const express = require('express');
-const mysql = require('mysql2');
+const {passwordYN, passwordRequest}
+ = require('./lib/passwordRequest')
+let mysqlPassword;
 
 const PORT = process.env.PORT || 3001;
 const app = express();
 
-app.use(express.urlencoded({extended: false}));
+app.use(express.urlencoded({extended: true}));
 app.use(express.json());
 
-const db = mysql.createPool(
-    {
-      host: 'localhost',
-      user: 'root',
-      password: '',
-      database: 'employees_db'
-    },
-    console.log(`Connected to the movies_db database.`)
-);
 
+// Throws 404 error as default undefined error
+app.use((req, res) => {
+  res.status(404).end();
+});
+
+app.listen(PORT, async () => {
+  await console.log(`Server started at http://localhost:${PORT} ( ͡° ͜ʖ ͡°)`);
+  start();
+})
+
+const start = async () => {
+  await passwordYN();
+}
