@@ -1,7 +1,5 @@
 const express = require('express');
-const {passwordYN, passwordRequest}
- = require('./lib/passwordRequest')
-let mysqlPassword;
+const {initPrompt} = require('./lib/prompts')
 
 const PORT = process.env.PORT || 3001;
 const app = express();
@@ -17,9 +15,5 @@ app.use((req, res) => {
 
 app.listen(PORT, async () => {
   await console.log(`Server started at http://localhost:${PORT} ( ͡° ͜ʖ ͡°)`);
-  start();
+  initPrompt();
 })
-
-const start = async () => {
-  await passwordYN();
-}
